@@ -12,7 +12,7 @@ app.use(function* (next){
   yield next;
   const ms = new Date() - start;
   // 显示执行的时间
-  console.log('%s %s - %s', this.method, this.url, ms); 
+  console.log('%s %s - %s', this.method, this.url, ms);
 });
 
 app.on('error', (err, _ctx) => {
