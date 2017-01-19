@@ -11,9 +11,10 @@
         <el-input
           v-model="password"
           placeholder="密码"
-          type="password">
+          type="password"
+          @keyup.enter.native="loginToDo">
         </el-input>
-        <el-button type="primary">登录</el-button>
+        <el-button type="primary"  @click="loginToDo">登录</el-button>
       </el-row>
     </el-col>
   </el-row>
@@ -27,17 +28,23 @@ export default {
       password: '',
     };
   },
+  methods: {
+    loginToDo() {
+      // 编程式路由，通过push方法，改变路由。
+      this.$router.push('/todolist');
+    },
+  },
 };
 </script>
 
 <style lang="stylus" scoped>
   .el-row.content
-    padding 16px
+    padding: 16px
   .title
-    font-size 28px
+    font-size: 28px
   .el-input
-    margin 12px 0
+    margin: 12px 0
   .el-button
-    width 100%
-    margin-top 12px
+    width: 100%
+    margin-top: 12px
 </style>
