@@ -11,6 +11,14 @@ const getUserById = function* (id) {
   return userInfo;
 };
 
+const getUserByName = function* (name) {
+  const userInfo = yield User.findOne({
+    where: { user_name: name },
+  });
+  return userInfo;
+};
+
 module.exports = {
   getUserById,
+  getUserByName,
 };
