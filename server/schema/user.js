@@ -15,7 +15,7 @@ module.exports = function (sequelize, DataTypes) {
     password: {
       type: DataTypes.CHAR(32),
       allowNull: false,
-    }
+    },
   }, {
     tableName: 'user',
   });

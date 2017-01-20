@@ -10,7 +10,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     user_id: {
       type: DataTypes.INTEGER(11),
-      allowNull: false
+      allowNull: false,
     },
     content: {
       type: DataTypes.CHAR(255),
@@ -19,7 +19,7 @@ module.exports = function (sequelize, DataTypes) {
     status: {
       type: DataTypes.INTEGER(1),
       allowNull: false,
-    }
+    },
   }, {
     tableName: 'list',
   });

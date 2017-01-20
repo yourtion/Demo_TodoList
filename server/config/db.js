@@ -9,4 +9,4 @@ const Todolist = new Sequelize('mysql://root@localhost/todos', {
 
 module.exports = {
   Todolist,
-}
+};
