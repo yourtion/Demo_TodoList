@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import md5 from 'md5';
 export default {
   data() {
     return {
@@ -30,8 +31,29 @@ export default {
   },
   methods: {
     loginToDo() {
-      // 编程式路由，通过push方法，改变路由。
-      this.$router.push('/todolist');
+      const TOKEN_KEY = 'demo-token';
+      const obj = {
+        name: this.account,
+        password: md5(this.password),
+      };
+      this.$http.post('/auth/user', obj)
+        .then(res => {
+          if(res.data.success) {
+            sessionStorage.setItem(TOKEN_KEY, res.data.token);
+            this.$message({
+              type: 'success',
+              message: '登录成功！',
+            });
+            this.$router.push('/todolist');
+          } else {
+            this.$message.error(res.data.info);
+            sessionStorage.setItem(TOKEN_KEY, null);
+          }
+        })
+        .catch(_err => {
+          this.$message.error('请求错误！');
+          sessionStorage.setItem(TOKEN_KEY, null);
+        });
     },
   },
 };

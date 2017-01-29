@@ -2,9 +2,12 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import Axios from 'axios';
 import App from './App';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-default/index.css';
+
+Vue.prototype.$http = Axios;
 
 // Vue全局使用
 Vue.use(ElementUI);
