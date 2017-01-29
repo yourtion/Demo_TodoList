@@ -37,6 +37,17 @@ const router = new VueRouter({
   ],
 });
 
+router.beforeEach((to, from, next) => {
+  const token = sessionStorage.getItem('demo-token');
+  const isToken = (token !== 'null' && token !== null);
+  if(to.path === '/' && isToken) {
+    return next('/todolist');
+  } else if(isToken || to.path === '/') {
+    return next();
+  }
+  next('/');
+});
+
 /* eslint-disable no-new */
 new Vue({
   router,

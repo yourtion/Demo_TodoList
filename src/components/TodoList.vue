@@ -47,10 +47,22 @@
 </template>
 
 <script>
+import jwt from 'jsonwebtoken'
 export default {
+  created() {
+    const userInfo = this.getUserInfo();
+    if(userInfo !== null) {
+      this.id = userInfo.id;
+      this.name = userInfo.name;
+    } else {
+      this.id = '';
+      this.name = '';
+    }
+  },
   data() {
     return {
-      name: 'Yourtion',
+      id: '',
+      name: '',
       todos: '',
       activeName: 'first',
       list: [],
@@ -88,6 +100,13 @@ export default {
     restore(index) {
       this.$set(this.list[index], 'status', false);
       this.$message({ type: 'info', message: '任务恢复' });
+    },
+    getUserInfo() {
+      const token = sessionStorage.getItem('demo-token');
+      if(token !== 'null' && token !== null) {
+        return jwt.verify(token, 'vue-koa-demo');
+      }
+      return null;
     },
   },
 };
