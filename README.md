@@ -1,6 +1,6 @@
-# todo
+# Demo_TodoList
 
-> A Vue.js project
+use Vue Koa to build Todo
 
 ## Build Setup
 
