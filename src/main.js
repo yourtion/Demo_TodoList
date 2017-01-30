@@ -43,6 +43,8 @@ router.beforeEach((to, from, next) => {
   if(to.path === '/' && isToken) {
     return next('/todolist');
   } else if(isToken || to.path === '/') {
+    // 全局设定header的token验证，注意Bearer后有个空格
+    Vue.prototype.$http.defaults.headers.common['Authorization'] = 'Bearer ' + token;
     return next();
   }
   next('/');
