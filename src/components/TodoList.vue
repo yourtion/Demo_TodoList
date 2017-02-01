@@ -8,7 +8,7 @@
           <el-col :xs="24">
             <template v-if="!Done">
               <template v-for="(item, index) in list">
-                <div class="todo-list" v-if="item.status === false">
+                <div class="todo-list" v-if="item.status === 0">
                   <span class="item">
                     {{ index + 1 }}. {{ item.content }}
                   </span>
@@ -58,6 +58,8 @@ export default {
       this.id = '';
       this.name = '';
     }
+    // 在组件创建时获取todolist
+    this.getTodolist();
   },
   data() {
     return {
@@ -74,7 +76,7 @@ export default {
       let count = 0;
       const length = this.list.length;
       for(const item of this.list) {
-        item.status === true ? count += 1 : '';
+        item.status === 1 ? count += 1 : '';
       }
       this.count = count;
       if(count === length || length === 0) {
@@ -86,7 +88,29 @@ export default {
   methods: {
     addTodos() {
       if(this.todos === '') return;
-      this.list.push({ status: false, content: this.todos });
+      const obj = {
+        status: false,
+        content: this.todos,
+        id: this.id,
+      };
+      this.$http.post('/api/todolist', obj)
+      .then((res) => {
+        if(res.status === 200){
+          this.$message({
+            type: 'success',
+            message: '创建成功！',
+          });
+          // 获得最新的todolist
+          this.getTodolist();
+        }else{
+          // 当返回不是200说明处理出问题
+          this.$message.error('创建失败！');
+        }
+      })
+      .catch((_err) => {
+        // 当没有返回值说明服务端错误或者请求没发送出去
+        this.$message.error('创建失败！');
+      });
       this.todos = '';
     },
     finished(index) {
@@ -107,6 +131,20 @@ export default {
         return jwt.verify(token, 'vue-koa-demo');
       }
       return null;
+    },
+    getTodolist() {
+      this.$http.get('/api/todolist/' + this.id)
+      .then((res) => {
+        if(res.status === 200){
+          // 将获取的信息塞入实例里的list
+          this.list = res.data;
+        }else{
+          this.$message.error('获取列表失败！');
+        }
+      })
+      .catch((_err) => {
+        this.$message.error('获取列表失败！');
+      });
     },
   },
 };
