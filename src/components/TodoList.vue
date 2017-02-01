@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import jwt from 'jsonwebtoken'
+import jwt from 'jsonwebtoken';
 export default {
   created() {
     const userInfo = this.getUserInfo();
