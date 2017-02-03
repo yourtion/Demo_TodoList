@@ -13,7 +13,7 @@
                     {{ index + 1 }}. {{ item.content }}
                   </span>
                   <span class="pull-right">
-                    <el-button size="small" type="primary" @click="finished(index)">完成</el-button>
+                    <el-button size="small" type="primary" @click="update(index)">完成</el-button>
                     <el-button size="small" :plain="true" type="danger" @click="remove(index)">删除</el-button>
                   </span>
                 </div>
@@ -32,7 +32,7 @@
                   {{ index + 1 }}. {{ item.content }}
                 </span>
                 <span class="pull-right">
-                  <el-button size="small" type="primary" @click="restore(index)">还原</el-button>
+                  <el-button size="small" type="primary" @click="update(index)">还原</el-button>
                 </span>
               </div>
             </template>
@@ -113,17 +113,39 @@ export default {
       });
       this.todos = '';
     },
-    finished(index) {
-      this.$set(this.list[index], 'status', true);
-      this.$message({ type: 'success', message: '任务完成' });
+    update(index) {
+      this.$http.put(`/api/todolist/${ this.id }/${ this.list[index].id }/${ this.list[index].status }`)
+      .then((res) => {
+        if(res.status === 200){
+          this.$message({
+            type: 'success',
+            message: '任务状态更新成功！',
+          });
+          this.getTodolist();
+        } else {
+          this.$message.error('任务状态更新失败！');
+        }
+      })
+      .catch((_err) => {
+        this.$message.error('任务状态更新失败！');
+      });
     },
     remove(index) {
-      this.list.splice(index, 1);
-      this.$message({ type: 'info', message: '任务删除' });
-    },
-    restore(index) {
-      this.$set(this.list[index], 'status', false);
-      this.$message({ type: 'info', message: '任务恢复' });
+      this.$http.delete(`/api/todolist/${ this.id }/${ this.list[index].id }`)
+      .then((res) => {
+        if(res.status === 200){
+          this.$message({
+            type: 'success',
+            message: '任务删除成功！',
+          });
+          this.getTodolist();
+        } else {
+          this.$message.error('任务删除失败！');
+        }
+      })
+      .catch((_err) => {
+        this.$message.error('任务删除失败！');
+      });
     },
     getUserInfo() {
       const token = sessionStorage.getItem('demo-token');

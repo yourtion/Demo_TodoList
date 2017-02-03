@@ -25,7 +25,24 @@ const createTodolist = function* (data) {
   return true;
 };
 
+const removeTodolist = function* (id, user_id) {
+  yield Todolist.destroy({
+    where: { id, user_id },
+  });
+  return true;
+};
+
+const updateTodolist = function* (id, user_id, status) {
+  yield Todolist.update(
+    { status },
+    { where: { id, user_id }}
+  );
+  return true;
+};
+
 module.exports = {
   getTodolistById,
   createTodolist,
+  removeTodolist,
+  updateTodolist,
 };
