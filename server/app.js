@@ -4,6 +4,7 @@ const koa = require('koa-router')();
 const json = require('koa-json');
 const logger = require('koa-logger');
 const serve = require('koa-static');
+const historyApiFallback = require('koa-history-api-fallback');
 const auth = require('./routes/auth');
 const api = require('./routes/api');
 const jwt = require('koa-jwt');
@@ -46,12 +47,12 @@ app.on('error', (err, _ctx) => {
 koa.use('/auth', auth.routes());
 // 所有走/api/打头的请求都需要经过jwt中间件的验证。secret密钥必须跟我们当初签发的secret一致
 koa.use('/api', jwt({ secret: 'vue-koa-demo' }), api.routes());
-
-// 静态文件serve在koa-router的其他规则之上 
-// 将webpack打包好的项目目录作为Koa静态文件服务的目录
-app.use(serve(path.resolve(__dirname, '../dist')));
 // 将路由规则挂载到Koa上。
 app.use(koa.routes());
+
+app.use(historyApiFallback());
+// 将webpack打包好的项目目录作为Koa静态文件服务的目录
+app.use(serve(path.resolve(__dirname, '../dist')));
 
 app.listen(8889, () => {
   console.log('Koa is listening in 8889');
