@@ -7,6 +7,7 @@ const Todolist = new Sequelize(config.mysql, {
     // 取消Sequelzie自动给数据表加入时间戳（createdAt以及updatedAt）
     timestamps: false,
   },
+  logging: env === 'dev' ? console.log : false,
 });
 
 module.exports = {

@@ -53,6 +53,7 @@
     "html-webpack-plugin": "^2.8.1",
     "http-proxy-middleware": "^0.17.2",
     "json-loader": "^0.5.4",
+    "lei-coroutine": "^1.6.3",
     "md5": "^2.2.1",
     "mocha": "^3.2.0",
     "opn": "^4.0.2",

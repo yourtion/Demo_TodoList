@@ -56,7 +56,7 @@ app.use(historyApiFallback());
 // 将webpack打包好的项目目录作为Koa静态文件服务的目录
 app.use(serve(path.resolve(__dirname, '../dist')));
 
-app.listen(8889, () => {
+app.listen(8889, '127.0.0.1', () => {
   console.log('Koa is listening in 8889');
 });
 

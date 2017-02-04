@@ -1,12 +1,18 @@
 const superagent = require('supertest');
 const app = require('../app');
 const agent = superagent(app.listen());
+const utils = require('./utils');
 
 describe('Auth', () => {
+  before(function (done) {
+    utils.dropDB().then(done).catch(done);
+  });
+
   describe('Login', () => {
-    it('should return 200', (done) => {
+
+    it('user info success', (done) => {
       agent
-        .get('/')
+        .get('/auth/user/1')
         .expect(200, done);
     });
   });
