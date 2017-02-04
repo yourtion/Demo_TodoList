@@ -8,7 +8,8 @@
     "dev": "node build/dev-server.js",
     "build": "node build/build.js",
     "server": "node server/app.js",
-    "lint": "eslint --ext .js,.vue src server --fix"
+    "lint": "eslint --ext .js,.vue src server --fix",
+    "test:server": "cd server && export NODE_ENV='test' && mocha"
   },
   "dependencies": {
     "koa": "^1.2.4",
@@ -53,12 +54,14 @@
     "http-proxy-middleware": "^0.17.2",
     "json-loader": "^0.5.4",
     "md5": "^2.2.1",
+    "mocha": "^3.2.0",
     "opn": "^4.0.2",
     "ora": "^0.3.0",
     "semver": "^5.3.0",
     "shelljs": "^0.7.4",
     "stylus": "^0.54.5",
     "stylus-loader": "^2.4.0",
+    "supertest": "^3.0.0",
     "url-loader": "^0.5.7",
     "vue": "^2.1.10",
     "vue-loader": "^10.0.0",
