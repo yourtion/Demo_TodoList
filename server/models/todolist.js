@@ -1,6 +1,6 @@
-const db = require('../config/db');
+const config = require('../config');
 const todoModel = '../schema/list';
-const TodolistDB = db.Todolist;
+const TodolistDB = config.Todolist;
 
 const Todolist = TodolistDB.import(todoModel);
 
