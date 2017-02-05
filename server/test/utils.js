@@ -7,7 +7,7 @@ const creatAdmin = coroutine.wrap(function* () {
   const user = TodolistDB.import(schema.user);
   yield user.create({
     user_name: 'yourtion',
-    password: 'e10adc3949ba59abbe56e057f20f883e',
+    password: '123456',
   });
 });
 
@@ -15,8 +15,10 @@ const dropDB = coroutine.wrap(function* () {
   for(const file in schema) {
     const model = TodolistDB.import(schema[file]);
     yield model.sync({ force: true });
-    yield creatAdmin();
   }
+  console.log('  - Clean DB');
+  yield creatAdmin();
+  console.log('  - Add Admin to DB');
 });
 
 module.exports = {
